@@ -1,0 +1,17 @@
+{% extends 'notes/base.html' %}
+{% block content %}
+<table class="table-share" id="table-share-others">
+	<thead>
+		<th>Note</th>
+		<th>Owner</th>
+	</thead>
+	<tbody>
+		{% for s in all_shares %}
+		<tr>
+			<td><a href="/notes/{{ s.note.id }}">{{ s.note }}</a></td>
+			<td>{{ s.owner }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

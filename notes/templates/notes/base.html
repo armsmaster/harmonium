@@ -1,0 +1,162 @@
+{% load notes_extras %}
+<head>
+	<style>
+	body {
+		font-family: Arial;
+	}
+	.post-form-login {
+		background-color: #e8e8e8;
+		border: solid #cccccc 1px;
+		width : 200;
+		margin-top: 10px;
+		padding: 5;
+	}
+	.post-form-login textarea, .post-form-login input, .post-form-login select {
+		width: 200px;
+	}
+	.post-form-login label {
+		display: block;
+		font-size: 0.8em;
+	}
+	.post-form {
+		background-color: #e8e8e8;
+		border: solid #cccccc 1px;
+		width : 400;
+		margin-top: 10px;
+		padding: 5;
+		display: block;
+	}
+	.post-form label {
+		display: block;
+		font-size: 0.8em;
+	}
+	.post-form textarea, .post-form input, .post-form select {
+		width: 400px;
+	}
+	.note-actions {
+		font-size: 0.9em;
+	}
+	.note-actions a:link, .note-actions a:visited {
+		//background-color: #e6e6e6;
+		color: #000000;
+	}
+	.note-actions a:hover {
+		background-color: #e6e6e6;
+		//font-weight: bold;
+	}
+	.notes-list {
+		margin-left: -40px;
+	}
+	.page-header {
+		margin-bottom: 10px;
+	}
+	.table-share {
+		border: 1px solid #cccccc;
+		width: 600px;
+		
+		//cellspacing: 5px;
+		border-collapse: collapse;
+		font-size: 1em;
+	}
+	
+	#table-share-others{
+		margin-top: 10px;
+	}
+	
+	.table-share th {
+		//border-collapse: collapse;
+		border: 1px solid #cccccc;
+		background-color: #e8e8e8;
+		text-align: left;
+		padding: 2px;
+	}
+	.table-share td {
+		text-align: left;
+		border: 1px solid #cccccc;
+		padding: 2px;
+	}
+	.main-content-container {
+		//float: left;
+		display: block;
+		margin-left: 40;
+		margin-right: 40px;
+	}
+	.page-header {
+		z-index: 1;
+		position: relative;
+		height: 20px;
+		background-color: #e8e8e8;
+		margin-bottom: 0px;
+		margin-left: 40px;
+		margin-right: 20px;
+		padding: 5px;
+		border: 1px solid #cccccc;
+	}
+	.top-content {
+		margin-top: 10px;
+	}
+	a:link {
+		color: #003399;
+	}
+	
+	blockquote {
+		color: #009933;
+	}
+	
+	a:visited {
+		color: #4d0019;
+	}
+	
+	.div-comments {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		color: #404040;
+		font-size: 0.8em;
+	}
+	
+	.div-comments-user {
+		color: #1a1a1a;
+		font-weight: bold;
+	}
+	.div-comments-timestamp {
+		color: #cccccc;
+	}
+	
+	
+	.div-comments p {
+		margin-top: 0px;
+		margin-bottom: 0px;		
+	}
+	</style>
+	<script type="text/javascript">
+	<!--
+    function toggle_visibility(id) {
+       var e = document.getElementById(id);
+       if(e.style.display == 'block')
+          e.style.display = 'none';
+       else
+          e.style.display = 'block';
+    }
+	//-->
+	</script>
+</head>
+
+<body>
+    <div class="page-header">
+		{% if user.is_authenticated %}
+		<div style="text-align: right; float: right;">{{ user.username }} <a href="/notes/logout/">sign out</a></div>
+		<div style="text-align: left; float: left;">
+			<a href="/notes/">my notes</a> | 
+			<a href="/notes/my_shares/">my shares</a> | 
+			<a href="/notes/others_shares/">shared with me</a> | 
+			<a href="/notes/comments_feed/">comments</a>
+		</div>
+		{% else %}
+		<div style="text-align: right; float: right;"><a href="/notes/login/">sign in</a></div>
+		{% endif %}
+	</div>
+	<div class="main-content-container">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>

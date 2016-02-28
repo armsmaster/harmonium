@@ -1,0 +1,39 @@
+{% extends 'notes/base.html' %}
+{% block content %}
+
+<form method="POST" class="post-form">{% csrf_token %}
+	<p>
+		<label>Select note</label>
+		<select name="share_note">
+			<option value="-1">---------</option>
+			{% for n in all_notes %}
+			<option value="{{ n.id }}">{{ n }}</option>
+			{% endfor%}
+		</select>
+	</p>
+	<p>
+		<label>Select user</label>
+		<select name="share_user">
+			<option value="-1">---------</option>
+			{% for u in all_users %}
+			<option value="{{ u.id }}">{{ u }}</option>
+			{% endfor%}
+		</select>
+	</p>
+	<button type="submit" style="width: 80px;">Share</button>
+</form>
+<table class="table-share">
+	<thead>
+		<th>Note</th>
+		<th>User</th>
+	</thead>
+	<tbody>
+		{% for s in all_shares %}
+		<tr>
+			<td><a href="/notes/{{ s.note.id }}">{{ s.note }}</a></td>
+			<td>{{ s.user }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

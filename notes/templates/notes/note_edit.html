@@ -1,0 +1,24 @@
+{% extends 'notes/base.html' %}
+{% block content %}
+<form method="POST" class="post-form">{% csrf_token %}
+	<p>
+		<label>Parent note</label>
+		<select name="parent_note">
+			<option value="-1">---------</option>
+			{% for p in parents %}
+			{% if note.has_parent %}
+				{% if note.parent_note.id == p.id %}
+					<option value="{{ p.id }}" selected="selected">{{ p.title }}</option>
+				{% else %}
+					<option value="{{ p.id }}">{{ p.title }}</option>
+				{% endif %}
+			{% else %}
+				<option value="{{ p.id }}">{{ p.title }}</option>
+			{% endif %}
+			{% endfor%}
+		</select>
+	</p>
+	{{ form.as_p }}
+	<button type="submit">Save changes</button>
+</form>
+{% endblock %}

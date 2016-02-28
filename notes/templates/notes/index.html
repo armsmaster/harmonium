@@ -1,0 +1,23 @@
+{% extends 'notes/base.html' %}
+{% block content %}
+	<h1>My Notes</h1>
+	<ul class="notes-list">
+		{% for n in notes %}
+		<li style="margin-bottom: 10">
+			{% if n.has_parent %}
+				<span style="background-color: #e6e6e6; font-color: #C3C3C3; font-weight: bold"><a href="/notes/{{ n.parent_note.id }}/">{{ n.parent_note.title }}</a></span> / 
+			{% endif %}
+			<span style="background-color: #e6e6e6"><strong><a href="/notes/{{ n.id }}/">{{ n.title }}</a></strong></span> <!--by {{ n.user.username }} @[{{ n.timestamp }}]<br>-->
+			<div class="note-actions">
+				<a href="/notes/note_edit/{{ n.id }}/">edit</a> 
+				<a href="/notes/note_delete/{{ n.id }}/">delete</a>
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+	<button onclick="toggle_visibility('new-top-level-note');">New Top Level Note</button>
+	<form method="POST" class="post-form" id="new-top-level-note" style="display: none;">{% csrf_token %}
+		{{ form.as_p }}
+		<button type="submit" style="width: 80px">Submit</button>
+	</form>
+{% endblock %}

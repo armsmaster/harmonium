@@ -1,0 +1,90 @@
+{% extends 'notes/base.html' %}
+{% block content %}
+	<div class="top-content">
+		{% if note.user.id == request.user.id %}
+		{% if note.has_parent %}
+		{% if note.parent_note.has_parent %}
+		/ <a href="/notes/{{ note.parent_note.parent_note.id }}/">{{ note.parent_note.parent_note.title }}</a> 
+		{% endif %}
+		/ <a href="/notes/{{ note.parent_note.id }}/">{{ note.parent_note.title }}</a> /
+		{% endif %}
+		{% endif %}
+		<h1 style="margin-bottom: 0px;">{{ note.title }}</h1>
+		<span style="color: #CCCCCC; font-size: 0.8em">by {{ note.user.username }} @[{{ note.timestamp }}]</span>
+		{% if note.user.id == request.user.id %}
+		<br>
+		<div class="note-actions">
+			<a href="/notes/note_edit/{{ note.id }}/">edit</a> 
+			<a href="/notes/note_delete/{{ note.id }}/">delete</a>
+		</div>
+		{% endif %}
+		<p>{{ note.content_html|safe }}</p>
+	</div>
+	
+	
+	{% if note.has_parent %}
+	<button onclick="toggle_visibility('test');">Show comments ({{ note.comment_set.count }})</button>
+	<button onclick="toggle_visibility('comment_form');">Add comment</button>
+	{% endif %}
+	{% if note.user.id == request.user.id %}
+	<button onclick="toggle_visibility('subnote_form');">Add subnote</button>
+	{% endif %}
+	
+	{% if note.has_parent %}
+	<!--so that top-level notes wont have comments-->
+	<form method="POST" class="post-form" id="comment_form" style="display: none;">{% csrf_token %}
+		<input type="hidden" name="form_type" value="comment" />
+		<input type="hidden" name="note_id" value="{{ note.id }}" />
+		{{ form_comment.as_p }}
+		<button type="submit">Submit</button>
+	</form>
+	<div id="test" style="display: none;">
+		{% for c in note.comment_set.all %}
+		<div class="div-comments">
+			<div class="div-comments-user">{{ c.user }}:</div>
+			{{ c.content_html|safe }}		
+			<div class="div-comments-timestamp">{{ c.timestamp }}</div>
+		</div>
+		{% endfor%}
+	</div>
+	{% endif %}
+	
+	{% if note.user.id == request.user.id %}
+	<form method="POST" class="post-form" id="subnote_form" style="display: none;">{% csrf_token %}
+		<input type="hidden" name="form_type" value="note" />
+		{{ form.as_p }}
+		<button type="submit">Submit</button>
+	</form>
+	{% endif %}
+	<ul class="notes-list">
+		{% for n in subnotes %}
+		<li style="margin-bottom: 20;">
+			<span style="background-color: #e6e6e6"><strong><a href="/notes/{{ n.id }}/">{{ n.title }}</a></strong></span> <span style="font-size: 0.8em">by {{ n.user.username }} @[{{ n.timestamp }}]</span><br>
+			<div class="note-actions">
+				<a href="/notes/note_edit/{{ n.id }}/">edit</a> 
+				<a href="/notes/note_delete/{{ n.id }}/">delete</a>
+			</div>
+			{{ n.content_html|safe }}
+			<div style="margin-top: 5px;">
+				<button onclick="toggle_visibility('comments-show-{{ n.id }}');">Show Comments ({{ n.comment_set.count }})</button>
+				<button onclick="toggle_visibility('comment-form-{{ n.id }}');">Add comment</button>
+			</div>
+			<form method="POST" class="post-form" id="comment-form-{{ n.id }}" style="display: none;">{% csrf_token %}
+				<input type="hidden" name="form_type" value="comment" />
+				<input type="hidden" name="note_id" value="{{ n.id }}" />
+				{{ form_comment.as_p }}
+				<button type="submit">Submit</button>
+			</form>
+			<div id="comments-show-{{ n.id }}" style="display: none;">
+				{% for c in n.comment_set.all %}
+				<div class="div-comments">
+					<div class="div-comments-user">{{ c.user }}:</div>
+					{{ c.content_html|safe }}		
+					<div class="div-comments-timestamp">{{ c.timestamp }}</div>
+				</div>
+				{% endfor%}
+			</div>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
