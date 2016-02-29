@@ -79,11 +79,26 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'acsm_006df41fa714af4',
+        'USER': 'be9d1e387343ed',
+        'PASSWORD': '3b127531',
+        'HOST': 'eu-cdbr-azure-north-d.cloudapp.net',
+        'PORT': '3306',
+        'OPTIONS': {'ssl': {'ca':'tutorial/cleardb-ca.cer', 
+            'cert':'tutorial/client-cert.cer', 
+            'key':'tutorial/client-key-nopass.cer'},},
+    }
+}
+
+"""
+DATABASES = {
+    'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
