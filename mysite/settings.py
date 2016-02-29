@@ -77,6 +77,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -85,20 +86,20 @@ DATABASES = {
         'PASSWORD': '3b127531',
         'HOST': 'eu-cdbr-azure-north-d.cloudapp.net',
         'PORT': '3306',
-        'OPTIONS': {'ssl': {'ca':'tutorial/cleardb-ca.cer', 
-            'cert':'tutorial/client-cert.cer', 
-            'key':'tutorial/client-key-nopass.cer'},},
+        'OPTIONS': {'ssl': {'ca':'cleardb-ca.pem', 
+            'cert':'client-cert.pem', 
+            'key':'ac8f7a7adbcf0e-key-nopass.pem'},},
     }
 }
-
 """
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-"""
+
 
 # Password validation
 # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
