@@ -363,6 +363,7 @@ def expense_edit(request, budget_id, expense_id):
 						a = ExpenseAccount.objects.get(pk=request.POST['expense_acc_id'])
 						e.expense_account = a
 						e.save()
+						ex.save()
 					except:
 						pass
 		ex = Expense.objects.get(pk=expense_id)
