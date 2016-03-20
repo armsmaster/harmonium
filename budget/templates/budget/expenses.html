@@ -20,7 +20,7 @@
 			<td>{{i.payment_date}}</td>
 			<td>{{i.comment}}</td>
 			<td style="text-align: right;">{{i.average}}</td>
-			<td><a href="{{i.id}}/">edit</a></td>
+			<td><a href="{{i.id}}/">edit</a> {% if not i.is_saved %}[draft]{% endif %}</td>
 		</tr>
 		{% endfor %}
 	</tbody>
