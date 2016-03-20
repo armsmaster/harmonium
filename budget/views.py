@@ -22,7 +22,7 @@ from datetime import date, timedelta
 def index(request):
 	if BudgetUser.objects.filter(user = request.user, is_main=True).count():
 		b = BudgetUser.objects.get(user = request.user, is_main=True)
-		return HttpResponseRedirect("/budget/" + str(b.id) + "/")
+		return HttpResponseRedirect("/budget/" + str(b.budget.id) + "/")
 	return HttpResponseRedirect("/budget/all/")
 
 @login_required
