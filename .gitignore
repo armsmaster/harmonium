@@ -1,5 +1,7 @@
 /_del/
 
+db.sqlite3
+
 *.pyc
 __pycache__
 myvenv
