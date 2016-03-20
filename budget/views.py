@@ -371,7 +371,8 @@ def expense_edit(request, budget_id, expense_id):
 		money_accs = MoneyAccount.objects.filter(budget=b, is_archived=False)
 		expense_accs = ExpenseAccount.objects.filter(budget=b, is_archived=False)
 		form_expense = FormExpenseNew(instance=ex)
-		form_expense_item_new = FormExpenseItemNew
+		#(initial={'date_start': t_prev,'date_end': t_today})
+		form_expense_item_new = FormExpenseItemNew(initial={'start_date': ex.payment_date,'end_date': ex.payment_date})
 		items = ExpenseItem.objects.filter(expense=ex)
 		recs = JournalRecord.objects.filter(event=ex)
 		recs = recs.extra(order_by = ['-date', 'account__name'])
