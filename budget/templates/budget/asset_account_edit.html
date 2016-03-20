@@ -1,0 +1,52 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h4><a href="/budget/{{budget.id}}/">{{ budget.name }}</a> / <a href="/budget/{{budget.id}}/accounts/asset/">Asset accounts</a> /</h4>
+<table class="datatable">
+	<thead>
+		<th style="width: 200px;">Property</th>
+		<th style="width: 400px;">Value</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Name</td>
+			<td>{{m_acc.name}}</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<button onclick="toggle_visibility('form-income-edit');" style="display: none;">Show/Hide Edit Account</button>
+	<button onclick="toggle_visibility('form-init-balance');">Show/Hide Set Initial Balance</button>
+</p>
+<form class="post-form" method="POST" id="form-income-edit" style="display: none;">{% csrf_token %}
+	{{ form_acc.as_p }}
+	<input type="hidden" name="form_id" value="acc" />
+	<button type="submit" style="width: 80px">OK</button>
+	<br />
+</form>
+<form class="post-form" method="POST" id="form-init-balance" style="display: none;">{% csrf_token %}
+	{{ form_init_balance.as_p }}
+	<input type="hidden" name="form_id" value="init_balance" />
+	<button type="submit" style="width: 80px">OK</button>
+</form>
+{% if records.count > 0 %}
+<table class="datatable">
+	<thead>
+		<th style="width: 130px;">Date</th>
+		<th style="width: 200px;">Account</th>
+		<th style="width: 120px; text-align: right;">Amount</th>
+		<th style="width: 300px; text-align: right;">Comment</th>
+	</thead>
+	<tbody>
+		{% for r in records %}
+		<tr>
+			<td>{{r.date}}</td>
+			<td>{{r.account.name}}</td>
+			<td style="text-align: right;">{{r.amount}}</td>
+			<td style="text-align: right;">{{r.comment}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br />
+{% endif %}
+{% endblock %}

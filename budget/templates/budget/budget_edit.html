@@ -1,0 +1,63 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h4><a href="/budget/{{budget.id}}/">{{ budget.name }}</a> /</h4>
+<table class="datatable">
+	<thead>
+		<th style="width: 100px;">Property</th>
+		<th style="width: 200px;">Value</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Name</td>
+			<td>{{budget.name}}</td>
+		</tr>
+		<tr>
+			<td>Is main</td>
+			<td>{{bu.is_main}}</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<button onclick="toggle_visibility('form-budget-edit');">Show/Hide Edit Form</button>
+	<button onclick="toggle_visibility('form-budget-share');">Show/Hide Share Form</button>
+</p>
+<form class="post-form" method="POST" id="form-budget-edit" style="display: none;">{% csrf_token %}
+	{{ form_budget.as_p }}
+	<p>
+		<label>Is main</label>
+		<select name="is_main">
+			{% if bu.is_main %}
+			<option selected="selected" value="MAIN">YES</option>
+			<option value="NOT_MAIN">NO</option>
+			{% else %}
+			<option value="MAIN">YES</option>
+			<option selected="selected" value="NOT_MAIN">NO</option>
+			{% endif %}
+		</select>
+	</p>
+	<input type="hidden" name="form_id" value="budget" />
+	<button type="submit" style="width: 80px">OK</button>
+	<br />
+</form>
+<form class="post-form" method="POST" id="form-budget-share" style="display: none;">{% csrf_token %}
+	{{ form_user_budged }}
+	<br /><br />
+	<input type="hidden" name="form_id" value="user_budget" />
+	<button type="submit" style="width: 80px">Share</button>
+</form>
+{% if budget_user_set.count > 0 %}
+<table class="datatable">
+	<thead>
+		<th style="width: 130px;">User Name</th>
+	</thead>
+	<tbody>
+		{% for u in budget_user_set %}
+		<tr>
+			<td>{{u.user.username}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br />
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h1>My Budgets</h1>
+<table class="datatable">
+	<thead>
+		<th>Budget Name</th>
+		<th style="width: 80;"></th>
+		<th style="width: 80;"></th>
+	</thead>
+	<tbody>
+		{% for b in budget_user_set %}
+		<tr>
+			<td><a href="/budget/{{b.budget.id}}/">{{ b.budget.name }}</a></td>
+			<td><a href="/budget/{{b.budget.id}}/edit/">edit</a></td>
+			<td>
+				{% if b.is_main %}
+				main
+				{% endif %}
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<form class="post-form" method="POST" id="form-budget-new">{% csrf_token %}
+	{{ form_budget_new.as_p }}
+	<button type="submit" style="width: 80px">Add</button>
+</form>
+{% endblock %}

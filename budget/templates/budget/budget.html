@@ -1,0 +1,71 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h3>Budget: {{ budget.name }}</h3>
+<table class="datatable">
+	<thead>
+		<th onclick="toggle_visibility_table('cat-rows');">Account Categories</th>
+	</thead>
+	<tbody id="cat-rows" style="display: '';">
+		<tr><td><a href="cat-expenses/">Expenses</a></td></tr>
+		<tr><td><a href="cat-income/">Income</a></td></tr>
+		<tr><td><a href="cat-fin-account/">Financial Accounts</a></td></tr>
+		<tr><td><a href="banks/">Banks</a></td></tr>
+	</tbody>
+</table>
+<br />
+<table class="datatable">
+	<thead>
+		<th onclick="toggle_visibility_table('acc-rows');">Accounts</th>
+	</thead>
+	<tbody id="acc-rows" style="display: '';">
+		<tr><td><a href="accounts/expense/">Expenses</a></td></tr>
+		<tr><td><a href="accounts/income/">Income</a></td></tr>
+		<tr><td><a href="accounts/money/">Money</a></td></tr>
+		<tr><td><a href="accounts/asset/">Assets</a></td></tr>
+		<tr><td><a href="accounts/liability/">Liabilities</a></td></tr>
+	</tbody>
+</table>
+<br />
+<table class="datatable">
+	<thead>
+		<th onclick="toggle_visibility_table('actions-rows');">Actions</th>
+	</thead>
+	<tbody id="actions-rows" style="display: none;">
+		<tr><td><a href="expense/new/">Add Expense</a></td></tr>
+		<tr><td><a href="income/new/">Add Income</a></td></tr>
+		<tr><td><a href="transfer/new/">Add Money Transfer</a></td></tr>
+	</tbody>
+</table>
+<br />
+<table class="datatable">
+	<thead>
+		<th onclick="toggle_visibility_table('events-rows');">Events Lists</th>
+	</thead>
+	<tbody id="events-rows" style="display: none;">
+		{% if ex_drafts.count > 0 %}
+		<tr><td><a href="accounts/expense/">Expense Drafts ({{ex_drafts.count}})</a></td></tr>
+		{% endif %}
+		<tr><td><a href="expense/">Expenses</a></td></tr>
+		<tr><td><a href="income/">Income</a></td></tr>
+		<tr><td><a href="transfer/">Money Transfers</a></td></tr>
+		<tr style="display: none;">
+			<td style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
+				<table class="inner-datatable">
+					<thead>
+						<th onclick="toggle_visibility_table('events-rows2');">Events Lists</th>
+					</thead>
+					<tbody id="events-rows2" style="display: none;">
+						{% if ex_drafts.count > 0 %}
+						<tr><td><a href="accounts/expense/">Expense Drafts ({{ex_drafts.count}})</a></td></tr>
+						{% endif %}
+						<tr><td><a href="expense/">Expenses</a></td></tr>
+						<tr><td><a href="income/">Income</a></td></tr>
+						<tr><td><a href="transfer/">Money Transfers</a></td></tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<br />
+{% endblock %}

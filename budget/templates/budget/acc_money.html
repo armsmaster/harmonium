@@ -1,0 +1,42 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h3>Budget: <a href="/budget/{{budget.id}}/">{{ budget.name }}</a></h3>
+<table class="datatable">
+	<thead>
+		<th style="width: 300px;">Money Account</th>
+		<th>Category</th>
+		<th>Bank</th>
+	</thead>
+	<tbody>
+		{% for i in items %}
+		<tr>
+			<td><a href="{{i.id}}/">{{i.name}}</a></td>
+			<td>{{i.category.name}}</td>
+			<td>{{i.bank.name}}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<form class="post-form" method="POST" id="form-acc-new">{% csrf_token %}
+	<p>
+		<label>Financial Account Category</label>
+		<select name="cat_id">
+			<option value="-1">---------</option>
+			{% for c in cat %}
+				<option value="{{ c.id }}">{{ c.name }}</option>
+			{% endfor%}
+		</select>
+	</p>
+	<p>
+		<label>Bank</label>
+		<select name="bank_id">
+			<option value="-1">---------</option>
+			{% for b in banks %}
+				<option value="{{ b.id }}">{{ b.name }}</option>
+			{% endfor%}
+		</select>
+	</p>
+	{{ form_acc_money_new.as_p }}
+	<button type="submit" style="width: 80px">Add</button>
+</form>
+{% endblock %}

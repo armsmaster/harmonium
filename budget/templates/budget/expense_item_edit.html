@@ -1,0 +1,22 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h3>Budget: <a href="/budget/{{budget.id}}/">{{ budget.name }}</a></h3>
+<form class="post-form" method="POST" id="form-cat-new">{% csrf_token %}
+	{{ form_expense_item_edit.as_p }}
+	<p>
+		<label>Expense Account</label>
+		<select name="expense_acc_id">
+			<option value="-1">---------</option>
+			{% for a in expense_accs %}
+				{% if item.expense_account.id == a.id %}
+					<option value="{{ a.id }}" selected="selected">{{ a.name }}</option>
+				{% else %}
+					<option value="{{ a.id }}">{{ a.name }}</option>
+				{% endif %}
+			{% endfor%}
+			
+		</select>
+	</p>
+	<button type="submit" style="width: 80px">Edit</button>
+</form>
+{% endblock %}

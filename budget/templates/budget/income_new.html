@@ -1,0 +1,26 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h4><a href="/budget/{{budget.id}}/">{{ budget.name }}</a> / <a href="/budget/{{budget.id}}/income/">Income</a> /</h4>
+<form class="post-form" method="POST" id="form-cat-new">{% csrf_token %}
+	{{ form_income_new.as_p }}
+	<p>
+		<label>Income Account</label>
+		<select name="income_acc_id">
+			<option value="-1">---------</option>
+			{% for i in income_accs %}
+				<option value="{{ i.id }}">{{ i.name }}</option>
+			{% endfor%}
+		</select>
+	</p>
+	<p>
+		<label>Money Account</label>
+		<select name="money_acc_id">
+			<option value="-1">---------</option>
+			{% for m in money_accs %}
+				<option value="{{ m.id }}">{{ m.name }}</option>
+			{% endfor%}
+		</select>
+	</p>
+	<button type="submit" style="width: 80px">Add</button>
+</form>
+{% endblock %}

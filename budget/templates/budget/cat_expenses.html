@@ -1,0 +1,18 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h3>Budget: <a href="/budget/{{budget.id}}/">{{ budget.name }}</a></h3>
+<table class="datatable">
+	<thead>
+		<th>Expense Categories</th>
+	</thead>
+	<tbody>
+		{% for i in items %}
+		<tr><td>{{i.name}}</td></tr>
+		{% endfor %}
+	</tbody>
+</table>
+<form class="post-form" method="POST" id="form-cat-new">{% csrf_token %}
+	{{ form_cat_expense_new.as_p }}
+	<button type="submit" style="width: 80px">Add</button>
+</form>
+{% endblock %}

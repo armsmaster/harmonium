@@ -1,0 +1,179 @@
+<head>
+	<style>
+		body {
+			font-family: Arial;
+		}
+		.page-header {
+			z-index: 1;
+			position: relative;
+			height: 20px;
+			margin-bottom: 0px;
+			margin-left: 40px;
+			margin-right: 20px;
+			padding: 5px;
+			border: 1px solid #cccccc;
+			background-color: #e8e8e8;
+		}
+		.main-content-container {
+			display: block;
+			margin-left: 40;
+			margin-right: 40px;
+		}
+		.datatable {
+			border: 1px solid #cccccc;
+			//width: 412px;
+			border-collapse: collapse;
+			font-size: 15;
+		}
+		.datatable th {
+			border: 1px solid #cccccc;
+			background-color: #e8e8e8;
+			text-align: left;
+			//padding: 2px;
+			width: 200px;
+		}
+		.datatable td {
+			text-align: left;
+			border: 1px solid #cccccc;
+			padding-left: 3px;
+			padding-right: 3px;
+		}
+		
+		.report-datatable {
+			border: 1px solid #cccccc;
+			//width: 412px;
+			border-collapse: collapse;
+			font-size: 15;
+		}
+		.report-datatable th {
+			border: 1px solid #cccccc;
+			background-color: #e8e8e8;
+			text-align: left;
+			padding: 0px;
+			padding-top: 1px;
+			padding-bottom: 1px;
+			width: 200px;
+		}
+		.report-datatable td {
+			text-align: left;
+			border: 1px solid #cccccc;
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		
+		.inner-datatable {
+			border: 0px;
+			border-collapse: collapse;
+			font-size: 15;
+		}
+		.inner-datatable th {
+			border: 1px solid #cccccc;
+			background-color: #F2F2F2;
+			text-align: left;
+			padding-top: 1px;
+			padding-bottom: 1px;
+		}
+		.inner-datatable td {
+			text-align: left;
+			border: 1px solid #cccccc;
+			padding-left: 0px;
+			padding-right: 0px;
+		}
+		
+		.inner-datatable {
+			border-collapse: collapse;
+		}
+		.inner-datatable td, table th {
+			//border: 1px solid black;
+		}
+		.inner-datatable tr:first-child th {
+			border-top: 0;
+		}
+		.inner-datatable tr:first-child th,
+		.inner-datatable tr:last-child td {
+			border-bottom: 0;
+		}
+		.inner-datatable tr td:first-child,
+		.inner-datatable tr th:first-child {
+			border-left: 0;
+		}
+		.inner-datatable tr td:last-child,
+		.inner-datatable tr th:last-child {
+			border-right: 0;
+		}
+		
+		.post-form {
+			background-color: #e8e8e8;
+			border: solid #cccccc 1px;
+			width : 400;
+			margin-top: 10px;
+			padding: 5;
+			display: block;
+		}
+		.post-form label {
+			display: block;
+			font-size: 0.8em;
+		}
+		.post-form textarea, .post-form input, .post-form select {
+			width: 400px;
+		}
+		
+		#id_payment_date_month, #id_date_start_month, #id_start_date_month, #id_end_date_month, #id_date_end_month, #id_date_month {
+			width: 100px;
+		}
+		#id_payment_date_day, #id_date_start_day, #id_start_date_day, #id_end_date_day, #id_date_end_day, #id_date_day {
+			width: 40px;
+		}
+		#id_payment_date_year, #id_date_start_year, #id_start_date_year, #id_end_date_year, #id_date_end_year, #id_date_year {
+			width: 60px;
+		}
+		
+		a:link {
+			color: #003399;
+		}
+		a:visited {
+			color: #4d0019;
+		}
+	</style>
+	<script type="text/javascript">
+		<!--
+		function toggle_visibility(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == 'block')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = 'block';
+		}
+		function toggle_visibility_table(id) {
+		   var e = document.getElementById(id);
+		   if(e.style.display == '')
+			  e.style.display = 'none';
+		   else
+			  e.style.display = '';
+		}
+		//-->
+	</script>
+</head>
+<body>
+	<div class="page-header">
+		{% if user.is_authenticated %}
+		<div style="text-align: right; float: right;">{{ user.username }} <a href="/notes/logout/">sign out</a></div>
+		<div style="text-align: left; float: left;">
+			<a href="/budget/all/">my budgets</a>
+			{% if budget.id %}
+			 <b>[</b> <a href="/budget/{{budget.id}}/expense/new/">new expense</a> (<a href="/budget/{{budget.id}}/expense/">all</a>)
+			 | <a href="/budget/{{budget.id}}/income/new/">new income</a> (<a href="/budget/{{budget.id}}/income/">all</a>)
+			 | <a href="/budget/{{budget.id}}/transfer/new/">new transfer</a> (<a href="/budget/{{budget.id}}/transfer/">all</a>) <b>]</b> 
+			 <b>[</b> <a href="/budget/{{budget.id}}/report/profit/">income statement</a> 
+			 | <a href="/budget/{{budget.id}}/report/balance/">balance</a> <b>]</b>
+			 {% endif %}
+		</div>
+		{% else %}
+		<div style="text-align: right; float: right;"><a href="/notes/login/">sign in</a></div>
+		{% endif %}
+	</div>
+	<div class="main-content-container">
+		{% block content %}
+		{% endblock %}
+	</div>
+</body>

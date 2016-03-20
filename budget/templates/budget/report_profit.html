@@ -1,0 +1,105 @@
+{% extends 'budget/base.html' %}
+{% load humanize %}
+{% block content %}
+<h3>Budget: <a href="/budget/{{budget.id}}/">{{ budget.name }}</a></h3>
+<form class="post-form" method="POST" id="form-report-setup">{% csrf_token %}
+	{{ form_setup }}
+	<br /><br />
+	<button type="submit" style="width: 80px">Go</button>
+</form>
+{% if report_ready %}
+<table class="report-datatable">
+	<thead>
+		<th style="width: 500px;" onclick="toggle_visibility_table('total-income-details');">{{ rep_data_income.main_line.prefix }} {{ rep_data_income.main_line.string_line }}</td>
+		<th style="width: 120px; text-align: right">{{ rep_data_income.main_line.amount|floatformat:2|intcomma }}</td>
+		<th style="width: 120px; text-align: right">{{ rep_data_income.main_line.share_weight|floatformat:2 }}%</td>
+	</thead>
+	<tbody id="total-income-details" style="display: '';">
+		{% for i in rep_data_income.details %}
+		<tr>
+			<td colspan="3" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
+				<table class="inner-datatable">
+					<thead>
+						<th onclick="toggle_visibility_table('income-cat-{{i.id}}-details');" style="width: 500px;">{{ i.main_line.prefix }} {{ i.main_line.string_line }}</td>
+						<th style="width: 120px; text-align: right">{{ i.main_line.amount|floatformat:2|intcomma }}</td>
+						<th style="width: 120px; text-align: right">{{ i.main_line.share_weight|floatformat:2 }}%</td>
+					</thead>
+					<tbody id="income-cat-{{i.id}}-details" style="display: none;">
+						{% for j in i.details %}
+						<tr>
+							<td colspan="3" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
+								<table class="inner-datatable">
+									<thead style="background: #FFFFFF;">
+										<th onclick="toggle_visibility_table('income-acc-{{j.id}}-details');" style="width: 500px;background: #FFFFFF;">{{ j.main_line.prefix }} {{ j.main_line.string_line }}</td>
+										<th style="width: 120px; text-align: right;background: #FFFFFF;">{{ j.main_line.amount|floatformat:2|intcomma }}</td>
+										<th style="width: 120px; text-align: right;background: #FFFFFF;">{{ j.main_line.share_weight|floatformat:2 }}%</td>
+									</thead>
+									<tbody id="income-acc-{{j.id}}-details" style="display: none;">
+										{% for k in j.details %}
+										<tr>
+											<td>{{ k.main_line.prefix }} {{ k.main_line.string_line }}</td>
+											<td style="text-align: right">{{ k.main_line.amount|floatformat:2|intcomma }}</td>
+											<td style="text-align: right">{{ k.main_line.share_weight|floatformat:2 }}%</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br />
+<table class="report-datatable">
+	<thead>
+		<th style="width: 500px;" onclick="toggle_visibility_table('total-expense-details');">{{ rep_data_expense.main_line.prefix }} {{ rep_data_expense.main_line.string_line }}</td>
+		<th style="width: 120px; text-align: right">{{ rep_data_expense.main_line.amount|floatformat:2|intcomma }}</td>
+		<th style="width: 120px; text-align: right">{{ rep_data_expense.main_line.share_weight|floatformat:2 }}%</td>
+	</thead>
+	<tbody id="total-expense-details" style="display: '';">
+		{% for i in rep_data_expense.details %}
+		<tr>
+			<td colspan="3" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
+				<table class="inner-datatable">
+					<thead>
+						<th onclick="toggle_visibility_table('expense-cat-{{i.id}}-details');" style="width: 500px;">{{ i.main_line.prefix }} {{ i.main_line.string_line }}</td>
+						<th style="width: 120px; text-align: right">{{ i.main_line.amount|floatformat:2|intcomma }}</td>
+						<th style="width: 120px; text-align: right">{{ i.main_line.share_weight|floatformat:2 }}%</td>
+					</thead>
+					<tbody id="expense-cat-{{i.id}}-details" style="display: none;">
+						{% for j in i.details %}
+						<tr>
+							<td colspan="3" style="padding-left: 0px; padding-right: 0px; padding-top: 0px; padding-bottom: 0px;">
+								<table class="inner-datatable">
+									<thead style="background: #FFFFFF;">
+										<th onclick="toggle_visibility_table('expense-acc-{{j.id}}-details');" style="width: 500px;background: #FFFFFF;">{{ j.main_line.prefix }} {{ j.main_line.string_line }}</td>
+										<th style="width: 120px; text-align: right;background: #FFFFFF;">{{ j.main_line.amount|floatformat:2|intcomma }}</td>
+										<th style="width: 120px; text-align: right;background: #FFFFFF;">{{ j.main_line.share_weight|floatformat:2 }}%</td>
+									</thead>
+									<tbody id="expense-acc-{{j.id}}-details" style="display: none;">
+										{% for k in j.details %}
+										<tr>
+											<td>{{ k.main_line.prefix }} {{ k.main_line.string_line }}</td>
+											<td style="text-align: right">{{ k.main_line.amount|floatformat:2|intcomma }}</td>
+											<td style="text-align: right">{{ k.main_line.share_weight|floatformat:2 }}%</td>
+										</tr>
+										{% endfor %}
+									</tbody>
+								</table>
+							</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endif %}
+{% endblock %}

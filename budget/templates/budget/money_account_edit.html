@@ -1,0 +1,88 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h4><a href="/budget/{{budget.id}}/">{{ budget.name }}</a> / <a href="/budget/{{budget.id}}/accounts/money">Money accounts</a> /</h4>
+<table class="datatable">
+	<thead>
+		<th style="width: 200px;">Property</th>
+		<th style="width: 400px;">Value</th>
+	</thead>
+	<tbody>
+		<tr>
+			<td>Name</td>
+			<td>{{m_acc.name}}</td>
+		</tr>
+		<tr>
+			<td>Category</td>
+			<td>{{m_acc.category.name}}</td>
+		</tr>
+		<tr>
+			<td>Bank</td>
+			<td>{{m_acc.bank.name}}</td>
+		</tr>
+	</tbody>
+</table>
+<p>
+	<button onclick="toggle_visibility('form-income-edit');">Show/Hide Edit Account</button>
+	<button onclick="toggle_visibility('form-init-balance');">Show/Hide Set Initial Balance</button>
+</p>
+<form class="post-form" method="POST" id="form-income-edit" style="display: none;">{% csrf_token %}
+	{{ form_acc_money.as_p }}
+	<p>
+		<label>Category</label>
+		<select name="cat_id">
+			<option value="-1">---------</option>
+			{% for c in cat %}
+				{% if c.id == m_acc.category.id %}
+					<option value="{{ c.id }}" selected="selected">{{ c.name }}</option>
+				{% else %}
+					<option value="{{ c.id }}">{{ c.name }}</option>
+				{% endif %}
+			{% endfor%}
+		</select>
+	</p>
+	<p>
+		<label>Bank</label>
+		<select name="bank_id">
+			<option value="-1">---------</option>
+			{% for b in banks %}
+				{% if b.id == m_acc.bank.id %}
+					<option value="{{ b.id }}" selected="selected">{{ b.name }}</option>
+				{% else %}
+					<option value="{{ b.id }}">{{ b.name }}</option>
+				{% endif %}
+			{% endfor%}
+		</select>
+	</p>
+	<input type="hidden" name="form_id" value="acc" />
+	<button type="submit" style="width: 80px">OK</button>
+	<br />
+</form>
+<form class="post-form" method="POST" id="form-init-balance" style="display: none;">{% csrf_token %}
+	{{ form_init_balance.as_p }}
+	<input type="hidden" name="form_id" value="init_balance" />
+	<button type="submit" style="width: 80px">OK</button>
+</form>
+{% if all_records.count > 0 %}
+<table class="datatable">
+	<thead>
+		<th style="width: 130px;">Date</th>
+		<th style="width: 120px; text-align: right;">Amount</th>
+		<th style="width: 300px; text-align: right;">Comment</th>
+	</thead>
+	<tbody>
+		{% for r in all_records %}
+		<tr>
+			<td>{{r.date}}</td>
+			<td style="text-align: right;">{{r.amount}}</td>
+			{% if r.event_type %}
+			<td style="text-align: right;"><a href="/budget/{{budget.id}}/{{r.event_type}}/{{r.event.id}}/">{{r.comment}}</a></td>
+			{% else %}
+			<td style="text-align: right;">{{r.comment}}</td>
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<br />
+{% endif %}
+{% endblock %}

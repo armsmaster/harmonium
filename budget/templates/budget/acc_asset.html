@@ -1,0 +1,20 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h3>Budget: <a href="/budget/{{budget.id}}/">{{ budget.name }}</a></h3>
+<table class="datatable">
+	<thead>
+		<th style="width: 300px;">Asset Accounts</th>
+	</thead>
+	<tbody>
+		{% for i in items %}
+		<tr>
+			<td><a href="{{i.id}}/">{{i.name}}</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+<form class="post-form" method="POST" id="form-acc-new" style="display: none;">{% csrf_token %}
+	{{ form_acc_asset_new.as_p }}
+	<button type="submit" style="width: 80px">Add</button>
+</form>
+{% endblock %}

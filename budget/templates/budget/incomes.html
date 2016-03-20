@@ -1,0 +1,30 @@
+{% extends 'budget/base.html' %}
+{% block content %}
+<h3>Budget: <a href="/budget/{{budget.id}}/">{{ budget.name }}</a></h3>
+<table class="datatable">
+	<thead>
+		<th style="width: 200px;">Income Account</th>
+		<th style="width: 200px;">Money Account</th>
+		<th style="width: 120px; text-align: right;">Amount</th>
+		<th style="width: 130px;">Payment Date</th>
+		<th style="width: 130px;">Start Date</th>
+		<th style="width: 130px;">End Date</th>
+		<th style="width: 120px; text-align: right;">Average</th>
+		<th style="width: 100px;"></th>
+	</thead>
+	<tbody>
+		{% for i in items %}
+		<tr>
+			<td>{{i.income_account.name}}</td>
+			<td><a href="/budget/{{budget.id}}/accounts/money/{{i.money_account.id}}/">{{i.money_account.name}}</a></td>
+			<td style="text-align: right;">{{i.amount}}</td>
+			<td>{{i.payment_date}}</td>
+			<td>{{i.start_date}}</td>
+			<td>{{i.end_date}}</td>
+			<td style="text-align: right;">{{i.average}}</td>
+			<td><a href="{{i.id}}/">edit</a></td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% endblock %}

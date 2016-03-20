@@ -34,12 +34,14 @@ LOGIN_REDIRECT_URL = '/notes/'
 INSTALLED_APPS = [
 	'polls.apps.PollsConfig',
 	'notes.apps.NotesConfig',
+	'budget.apps.BudgetConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'django.contrib.humanize',
 ]
 
 MIDDLEWARE_CLASSES = [
