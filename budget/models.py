@@ -399,7 +399,11 @@ class ReportIncome(object):
 				acc_group.main_line.amount = acc_sum
 				
 				for r in recs:
-					r_line = ReportLine(3, str(r.date) + r.comment,(-r.amount),round((-r.amount) / acc_sum * 100, 2))
+					temp_amt = -r.amount
+					temp_share = 0
+					if acc_sum != 0:
+						temp_share = round((-r.amount) / acc_sum * 100, 2)
+					r_line = ReportLine(3, str(r.date) + r.comment,temp_amt,temp_share)
 					r_group = ReportGroupLines(r_line, r.id)
 					acc_group.add_item(r_group)
 				
@@ -444,7 +448,11 @@ class ReportIncome(object):
 				acc_group.main_line.amount = acc_sum
 				
 				for r in recs:
-					r_line = ReportLine(3, str(r.date)+ ' ' + r.comment, r.amount,round(r.amount / acc_sum * 100, 2))
+					temp_amt = r.amount
+					temp_share = 0
+					if acc_sum != 0:
+						temp_share = round(r.amount / acc_sum * 100, 2)
+					r_line = ReportLine(3, str(r.date)+ ' ' + r.comment, temp_amt, temp_share)
 					r_group = ReportGroupLines(r_line, r.id)
 					acc_group.add_item(r_group)
 					
