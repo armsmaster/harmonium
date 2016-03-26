@@ -451,7 +451,10 @@ class ReportIncome(object):
 					temp_amt = r.amount
 					temp_share = 0
 					if acc_sum != 0:
-						temp_share = round(r.amount / acc_sum * 100, 2)
+						try:
+							temp_share = round(r.amount / acc_sum * 100, 2)
+						except:
+							pass
 					r_line = ReportLine(3, str(r.date)+ ' ' + r.comment, temp_amt, temp_share)
 					r_group = ReportGroupLines(r_line, r.id)
 					acc_group.add_item(r_group)
