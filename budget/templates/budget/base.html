@@ -5,14 +5,29 @@
 		}
 		.page-header {
 			z-index: 1;
-			position: relative;
-			height: 20px;
+			position: fixed;
+			top: 0px;
+			left: 0px;
+			//height: 20px;
+			width: 100%;
+			box-sizing: border-box;
 			margin-bottom: 0px;
-			margin-left: 40px;
-			margin-right: 20px;
-			padding: 5px;
-			border: 1px solid #cccccc;
-			background-color: #e8e8e8;
+			margin-left: 0px;
+			margin-right: 0px;
+			margin-top: 0px;
+			padding: 10px;
+			background-color: black;
+			color: white;
+		}
+		.page-header a:link {
+			color: #e8e8e8;
+			text-decoration: none;
+		}
+		.page-header a:hover {
+			font-weight: bold;
+		}
+		.page-header a:visited {
+			color: #e8e8e8;
 		}
 		.main-content-container {
 			display: block;
@@ -171,6 +186,7 @@
 		{% else %}
 		<div style="text-align: right; float: right;"><a href="/notes/login/">sign in</a></div>
 		{% endif %}
+	</header>
 	</div>
 	<div class="main-content-container">
 		{% block content %}
