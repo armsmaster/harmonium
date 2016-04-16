@@ -168,6 +168,7 @@ def note(request, note_id):
 				n.user = request.user
 				n.parent_note = note
 				n.save()
+				subnotes.append(n)
 			if request.POST['form_type'] == 'comment':
 				f = CommentForm(request.POST)
 				c = f.save(commit=False)
