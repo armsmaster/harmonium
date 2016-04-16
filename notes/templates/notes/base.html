@@ -20,10 +20,10 @@
 	}
 	.post-form {
 		background-color: #e8e8e8;
-		border: solid #cccccc 1px;
+		//border: solid #cccccc 1px;
 		width : 400;
 		margin-top: 10px;
-		padding: 5;
+		padding: 10px;
 		display: block;
 	}
 	.post-form label {
@@ -80,18 +80,31 @@
 		display: block;
 		margin-left: 40;
 		margin-right: 40px;
+		margin-top: 50px;
 	}
 	.page-header {
 		z-index: 1;
-		position: relative;
-		height: 20px;
-		margin-bottom: 0px;
-		margin-left: 40px;
-		margin-right: 20px;
-		padding: 5px;
-		border: 1px solid #A3A7AF;
-		background-color: #d6d8dd;
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		box-sizing: border-box;
+		width: 100%;
+		margin: 0px;
+		padding: 10px;
+		color: #CCCCCC;
+		background-color: black;
 	}
+	.page-header a:link {
+		color: white;
+		text-decoration: none;
+	}
+	.page-header a:visited {
+		color: white;
+	}
+	.page-header a:hover {
+		font-weight: bold;
+	}
+	
 	.top-content {
 		margin-top: 10px;
 	}
